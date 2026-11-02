@@ -21,10 +21,10 @@ rm -rf "${_src_dir}/out" || true
 fetch_sources "$clone" "$with_pgo"
 apply_patches
 apply_domsub
-helium_substitution
-helium_apply_translations
-helium_version
-helium_resources
+titanium_substitution
+titanium_apply_translations
+titanium_version
+titanium_resources
 write_gn_args
 gn_gen
 build

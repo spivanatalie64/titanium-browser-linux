@@ -24,7 +24,7 @@ setup_arch() {
 
 setup_paths() {
     _root_dir="$(repo_root)"
-    _main_repo="${_root_dir}/helium-chromium"
+    _main_repo="${_root_dir}/titanium/helium-chromium"
     _build_dir="${_root_dir}/build"
     _dl_cache="${_build_dir}/download_cache"
     _src_dir="${_build_dir}/src"
@@ -110,6 +110,9 @@ write_gn_args() {
     mkdir -p "${_out_dir}"
 
     cat "${_main_repo}/flags.gn" "${_root_dir}/flags.linux.gn" | tee "${_out_dir}/args.gn"
+    if [ -f "${_root_dir}/titanium/args.gn" ]; then
+        grep -v '^#' "${_root_dir}/titanium/args.gn" | grep -v '^[[:space:]]*$' | grep -v '^target_os' | grep -v '^target_cpu' | grep -v '^is_desktop_android' | tee -a "${_out_dir}/args.gn"
+    fi
     echo "target_cpu = \"$_build_arch\"" | tee -a "${_out_dir}/args.gn"
     echo "v8_target_cpu = \"$_build_arch\"" | tee -a "${_out_dir}/args.gn"
 
@@ -151,4 +154,25 @@ build() {
     local siso="${SISO_PATH:-${_src_dir}/third_party/siso/cipd/siso}"
     local autoninja="${_src_dir}/third_party/depot_tools/autoninja.py"
     SISO_PATH="$siso" "$autoninja" -C "$_out_dir" chrome chromedriver "$@"
+}
+
+titanium_substitution() {
+    python3 "$_main_repo/utils/name_substitution.py" --sub \
+        -t "$_src_dir" --backup-path "$_namesubs_cache"
+}
+
+titanium_apply_translations() {
+    python3 "$_main_repo/utils/i18n_apply.py" -t "$_src_dir"
+}
+
+titanium_version() {
+    python3 "$_main_repo/utils/helium_version.py" \
+        --tree "$_main_repo" \
+        --platform-tree "$_root_dir" \
+        --chromium-tree "$_src_dir"
+}
+
+titanium_resources() {
+    python3 "$_main_repo/utils/generate_resources.py" "$_main_repo/resources/generate_resources.txt" "$_main_repo/resources"
+    python3 "$_main_repo/utils/replace_resources.py" "$_main_repo/resources/helium_resources.txt" "$_main_repo/resources" "$_src_dir"
 }
