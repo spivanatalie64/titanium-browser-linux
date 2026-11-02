@@ -1,3 +1,3 @@
-[submodule "titanium"]
-	path = titanium
+[submodule "helium-chromium"]
+	path = helium-chromium
 	url = https://github.com/spivanatalie64/titanium-browser.git
