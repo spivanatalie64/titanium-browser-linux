@@ -24,7 +24,7 @@ setup_arch() {
 
 setup_paths() {
     _root_dir="$(repo_root)"
-    _main_repo="${_root_dir}/titanium/helium-chromium"
+    _main_repo="${_root_dir}/helium-chromium"
     _build_dir="${_root_dir}/build"
     _dl_cache="${_build_dir}/download_cache"
     _src_dir="${_build_dir}/src"
@@ -110,9 +110,6 @@ write_gn_args() {
     mkdir -p "${_out_dir}"
 
     cat "${_main_repo}/flags.gn" "${_root_dir}/flags.linux.gn" | tee "${_out_dir}/args.gn"
-    if [ -f "${_root_dir}/titanium/args.gn" ]; then
-        grep -v '^#' "${_root_dir}/titanium/args.gn" | grep -v '^[[:space:]]*$' | grep -v '^target_os' | grep -v '^target_cpu' | grep -v '^is_desktop_android' | tee -a "${_out_dir}/args.gn"
-    fi
     echo "target_cpu = \"$_build_arch\"" | tee -a "${_out_dir}/args.gn"
     echo "v8_target_cpu = \"$_build_arch\"" | tee -a "${_out_dir}/args.gn"
 
