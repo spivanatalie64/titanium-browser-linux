@@ -4,11 +4,11 @@ set -euxo pipefail
 _current_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 _root_dir="$(cd "$_current_dir/.." && pwd)"
 _release_dir="$_root_dir/build/release"
-_spec="$_root_dir/package/helium-bin.spec"
-_metainfo_file="$_root_dir/package/net.imput.helium.metainfo.xml"
+_spec="$_root_dir/package/titanium-bin.spec"
+_metainfo_file="$_root_dir/package/net.imput.titanium.metainfo.xml"
 
-_version=$(python3 "$_root_dir/helium-chromium/utils/helium_version.py" \
-                   --tree "$_root_dir/helium-chromium" \
+_version=$(python3 "$_root_dir/titanium-chromium/utils/titanium_version.py" \
+                   --tree "$_root_dir/titanium-chromium" \
                    --platform-tree "$_root_dir" \
                    --print)
 _tarball="$(realpath "${1:-}")"
@@ -35,7 +35,7 @@ cp "$_spec" "$_debbuild_dir/SPECS/"
 # sanity check for shared libs
 _tmpbin=$(mktemp)
 trap 'rm -rf "$_debbuild_dir"; rm -f "$_tmpbin"' EXIT
-tar -xOf "$_tarball" --strip-components=1 --wildcards '*/helium' > "$_tmpbin"
+tar -xOf "$_tarball" --strip-components=1 --wildcards '*/titanium' > "$_tmpbin"
 _missing="$(ldd "$_tmpbin" 2>&1 | grep 'not found' || true)"
 rm -f "$_tmpbin"
 
@@ -51,7 +51,7 @@ debbuild \
     --define "version $_version" \
     --define "_arch $_deb_arch" \
     --define "dist %{nil}" \
-    -bb "$_debbuild_dir/SPECS/helium-bin.spec"
+    -bb "$_debbuild_dir/SPECS/titanium-bin.spec"
 
 mkdir -p "$_release_dir"
 mv "$_debbuild_dir"/DEBS/*/*.deb "$_release_dir/"

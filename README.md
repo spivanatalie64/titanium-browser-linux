@@ -1,9 +1,9 @@
-# helium-linux
+# titanium-linux
 Linux builds, packaging, and development tooling for the
-[Helium Browser](https://github.com/imputnet/helium).
+[Titanium Browser](https://github.com/imputnet/titanium).
 
 ## Downloads
-Helium is available in multiple formats depending on your distribution.<br>
+Titanium is available in multiple formats depending on your distribution.<br>
 We offer builds for `x86_64/amd64` and `arm64/aarch64` platforms.
 
 > [!NOTE]
@@ -11,35 +11,35 @@ We offer builds for `x86_64/amd64` and `arm64/aarch64` platforms.
 > used with extreme caution.
 
 ### Fedora
-1. Enable [Helium COPR](https://copr.fedorainfracloud.org/coprs/imput/helium/):
+1. Enable [Titanium COPR](https://copr.fedorainfracloud.org/coprs/imput/titanium/):
     ```bash
-    sudo dnf copr enable imput/helium
+    sudo dnf copr enable imput/titanium
     ```
 
-1. Install Helium:
+1. Install Titanium:
     ```bash
-    sudo dnf install helium-bin
+    sudo dnf install titanium-bin
     ```
 
 ### Debian/Ubuntu
-1. Add Helium's signing public key:
+1. Add Titanium's signing public key:
     ```bash
-    curl -fsSL https://raw.githubusercontent.com/imputnet/helium-linux/main/pubkey.asc | sudo gpg --dearmor -o /usr/share/keyrings/helium.gpg
+    curl -fsSL https://raw.githubusercontent.com/imputnet/titanium-linux/main/pubkey.asc | sudo gpg --dearmor -o /usr/share/keyrings/titanium.gpg
     ```
 
-1. Add Helium's repo:
+1. Add Titanium's repo:
     ```bash
-    echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/helium.gpg] https://pkg.helium.computer/deb stable main" | sudo tee /etc/apt/sources.list.d/helium.list
+    echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/titanium.gpg] https://pkg.titanium.computer/deb stable main" | sudo tee /etc/apt/sources.list.d/titanium.list
     ```
     For prerelease builds, replace `stable` with `prerelease`
 
-1. Update apt lists and install Helium:
+1. Update apt lists and install Titanium:
     ```bash
-    sudo apt update && sudo apt install helium-bin
+    sudo apt update && sudo apt install titanium-bin
     ```
 
 ### AppImage and binary tarball
-[Download the latest release on GitHub](https://github.com/imputnet/helium-linux/releases/latest)
+[Download the latest release on GitHub](https://github.com/imputnet/titanium-linux/releases/latest)
 
 ### Flatpak/Flathub
 We will not support Flatpak as long as it's impossible to package Chromium
@@ -51,22 +51,22 @@ available.
 
 ### Depot
 Big thank you to [Depot](https://depot.dev/) for sponsoring our runners,
-which handle the Linux builds of Helium. Their high-performance infrastructure
-lets us compile, package, and release new builds of Helium within hours,
+which handle the Linux builds of Titanium. Their high-performance infrastructure
+lets us compile, package, and release new builds of Titanium within hours,
 not days.
 
 ### ungoogled-chromium
 This repo uses some stuff that originally came from
 [ungoogled-chromium-portablelinux](https://github.com/ungoogled-software/ungoogled-chromium-portablelinux)
-before we fully remade it and forked it for Helium.
+before we fully remade it and forked it for Titanium.
 
 ## Contributing
 Before contributing to this repo, please read the guidelines in main repo's
-[CONTRIBUTING.md](https://github.com/imputnet/helium/blob/main/CONTRIBUTING.md).
+[CONTRIBUTING.md](https://github.com/imputnet/titanium/blob/main/CONTRIBUTING.md).
 
 ## License
 All code, patches, modified portions of imported code or patches, and
-any other content that is unique to Helium and not imported from other
+any other content that is unique to Titanium and not imported from other
 repositories is licensed under GPL-3.0. See [LICENSE](LICENSE).
 
 Any content imported from other projects retains its original license (for
@@ -79,7 +79,7 @@ To build the binary, run `scripts/docker-build.sh` from the repo root.
 The `scripts/docker-build.sh` script will:
 1. Create a Docker image of a Debian-based building environment with all
    required packages (llvm, nodejs and distro packages) included.
-2. Run `scripts/build.sh` inside the Docker image to build Helium.
+2. Run `scripts/build.sh` inside the Docker image to build Titanium.
 
 Running `scripts/build.sh` directly will not work unless you're running a
 Debian-based distro and have all necessary dependencies installed. This repo is
@@ -100,15 +100,15 @@ clone, you can run `scripts/docker-build.sh -c` instead. This may be useful if
 a tarball for a release isn't available yet.
 
 ### Signature
-AppImage builds (since [0.5.7.1](https://github.com/imputnet/helium-linux/releases/tag/0.5.7.1)),
-binary tarballs (since [0.7.7.2](https://github.com/imputnet/helium-linux/releases/tag/0.7.7.2)),
-and the .deb repository (since [0.10.7.1](https://github.com/imputnet/helium-linux/releases/tag/0.10.7.1))
+AppImage builds (since [0.5.7.1](https://github.com/imputnet/titanium-linux/releases/tag/0.5.7.1)),
+binary tarballs (since [0.7.7.2](https://github.com/imputnet/titanium-linux/releases/tag/0.7.7.2)),
+and the .deb repository (since [0.10.7.1](https://github.com/imputnet/titanium-linux/releases/tag/0.10.7.1))
 are signed with the following key:
 
 ```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Comment: BE67 7C19 89D3 5EAB 2C5F  26C9 3516 01AD 01D6 378E
-Comment: Helium signing key (https://helium.computer/)
+Comment: Titanium signing key (https://titanium.computer/)
 
 xjMEaOqhEBYJKwYBBAHaRw8BAQdA+0OK9OgI98hQGR0ZI5aVuXxdeDU+6eyLiKhH
 4pwAaH7NQEhlbGl1bSBzaWduaW5nIGtleSAoaHR0cHM6Ly9oZWxpdW0uY29tcHV0

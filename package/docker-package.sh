@@ -3,9 +3,9 @@ set -euo pipefail
 
 _current_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 _root_dir="$(cd "${_current_dir}/.." && pwd)"
-_git_submodule="helium-chromium"
+_git_submodule="titanium-chromium"
 
-_image="helium-chromium-trixie-slim:packager"
+_image="titanium-chromium-trixie-slim:packager"
 _user_uidgid="$(id -u):$(id -g)"
 _docker_image_args=()
 _make_deb=${MAKE_DEB:-0}

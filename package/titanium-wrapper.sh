@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright 2025 The Helium Authors
+# Copyright 2025 The Titanium Authors
 # You can use, redistribute, and/or modify this source code under
 # the terms of the GPL-3.0 license that can be found in the LICENSE file.
 
@@ -14,4 +14,4 @@ HERE="$(dirname "$CHROME_WRAPPER")"
 export CHROME_WRAPPER
 export LD_LIBRARY_PATH="$HERE:$HERE/lib:$HERE/lib.target${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 
-exec "$HERE/helium" "$@"
+exec "$HERE/titanium" "$@"
