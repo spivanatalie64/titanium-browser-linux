@@ -15,4 +15,3 @@ use_vaapi=true
 use_system_libffi=false
 use_siso=true
 target_os = "linux"
-is_android = false
