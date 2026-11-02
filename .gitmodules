@@ -1,0 +1,3 @@
+[submodule "titanium"]
+	path = titanium
+	url = https://github.com/spivanatalie64/titanium-browser.git
