@@ -19,15 +19,19 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Download Docker image
-      uses: actions/download-artifact@v4
-      with:
-        name: docker-image-${{ env.ARCH }}
-        path: /tmp
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
-    - name: Load Docker image
-      shell: bash
-      run: docker load -i /tmp/chromium-builder.tar
+    # Rebuild/load the builder image from GHA cache instead of passing a large
+    # artifact between jobs (avoids expiration/missing artifact on long builds, #1).
+    - name: Load Docker image from cache
+      uses: docker/build-push-action@v5
+      with:
+        context: ./docker
+        file: ./docker/build.Dockerfile
+        tags: chromium-builder:trixie-slim
+        load: true
+        cache-from: type=gha
 
     - name: Free up runner space
       if: runner.environment == 'github-hosted'

@@ -32,6 +32,8 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      # Build and cache the builder image in GHA cache; load locally for prep.
+      # Avoids passing the large image as a workflow artifact between jobs (see #1).
       - name: Build and cache Docker image
         id: build-image
         uses: docker/build-push-action@v5
@@ -39,16 +41,9 @@ jobs:
           context: ./docker
           file: ./docker/build.Dockerfile
           tags: chromium-builder:trixie-slim
-          outputs: type=docker,dest=/tmp/chromium-builder.tar
+          load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      - name: Upload Docker image
-        uses: actions/upload-artifact@v4
-        with:
-          name: docker-image-${{ inputs.arch }}
-          path: /tmp/chromium-builder.tar
-          retention-days: 1
 
       - name: Prepare build tree
         uses: ./.github/actions/build
